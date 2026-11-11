@@ -1,0 +1,32 @@
+/* Gestaltung für Impressum und Datenschutz */
+:root {
+  --bg: #FBF6EE; --card: #FFFFFF; --text: #2B2118; --muted: #6B5D50;
+  --accent: #B5532E; --accent-dark: #8E3E20; --soft: #F5E9DA; --line: #E6D8C6;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 var(--sans); }
+.wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 64px; }
+.zurueck { display: inline-block; color: var(--accent-dark); font-weight: 600; text-decoration: none; margin-bottom: 18px; }
+.zurueck:hover { text-decoration: underline; }
+h1 { font-family: var(--serif); font-size: clamp(32px, 7vw, 44px); line-height: 1.1; margin: 0 0 18px; }
+h2 { font-family: var(--serif); font-size: 23px; margin: 34px 0 8px; }
+p, ul { margin: 0 0 12px; }
+ul { padding-left: 22px; }
+li { margin-bottom: 4px; }
+a { color: var(--accent-dark); }
+.karte { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+.kurz { background: var(--soft); border-radius: 12px; padding: 16px 18px 6px; margin-bottom: 8px; }
+.kurz p { font-weight: 700; margin-bottom: 6px; }
+.adresse { font-size: 18px; line-height: 1.55; }
+.klein { font-size: 15px; color: var(--muted); }
+mark.platzhalter { background: #FFE58A; color: #5A4300; padding: 0 3px; border-radius: 3px; }
+.warnung {
+  background: #FFF1D6; color: #7A4B00; border-radius: 10px; padding: 12px 14px;
+  font-size: 15px; margin-bottom: 20px;
+}
+footer { margin-top: 36px; text-align: center; font-size: 15px; color: var(--muted); }
+footer a { color: var(--muted); margin: 0 6px; }
+@media (max-width: 520px) { body { font-size: 16px; } .karte { padding: 18px 16px; } }

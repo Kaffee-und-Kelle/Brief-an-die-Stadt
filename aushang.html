@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Aushang zum Ausdrucken</title>
+<link rel="icon" type="image/png" href="bilder/favicon.png">
+<script src="config.js"></script>
+<script src="brief.js"></script>
+<script src="gemeinsam.js"></script>
+<script src="qrcode.js"></script>
+<style>
+  :root {
+    --bg: #FBF6EE; --text: #2B2118; --muted: #6B5D50;
+    --accent: #B5532E; --accent-dark: #8E3E20; --soft: #F5E9DA;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @page { size: A4 portrait; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #E9E2D8; font-family: var(--sans); color: var(--text); }
+
+  .werkzeug {
+    max-width: 210mm; margin: 20px auto 0; padding: 14px 18px; background: #fff;
+    border-radius: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    font-size: 15px;
+  }
+  .werkzeug p { margin: 0; flex: 1 1 260px; color: var(--muted); }
+  .werkzeug button {
+    font: 600 15px var(--sans); padding: 10px 16px; border-radius: 8px; cursor: pointer;
+    border: 2px solid var(--accent); background: var(--accent); color: #fff;
+  }
+  .werkzeug button.zweit { background: #fff; color: var(--accent-dark); }
+  .warnung { flex-basis: 100%; background: #FFF1D6; color: #7A4B00; padding: 10px 12px; border-radius: 8px; display: none; }
+  .warnung.an { display: block; }
+
+  .blatt {
+    width: 210mm; height: 297mm; margin: 20px auto 40px; background: var(--bg);
+    padding: 18mm 18mm 14mm; position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 6px 30px rgba(0,0,0,.12);
+  }
+  .band { position: absolute; left: 0; right: 0; top: 0; height: 7mm; background: var(--accent); }
+  .oben { display: flex; align-items: center; gap: 9mm; margin-top: 6mm; }
+  .oben .logo { width: 58mm; height: auto; flex: none; }
+  .kicker {
+    margin: 0 0 3mm; font-size: 13pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-dark);
+  }
+  h1 {
+    font-family: var(--serif); font-size: 40pt; line-height: 1.05; margin: 0; letter-spacing: -.01em;
+  }
+  .lead { font-size: 17pt; line-height: 1.4; margin: 9mm 0 0; max-width: 170mm; }
+  .lead strong { color: var(--accent-dark); }
+
+  .mitte { display: flex; gap: 10mm; align-items: center; margin-top: 10mm; }
+  .qr { width: 90mm; height: 90mm; background: #fff; padding: 5mm; border-radius: 4mm; flex: none; border: 1.2mm solid var(--text); }
+  .qr svg { width: 100%; height: 100%; display: block; }
+  .schritte { list-style: none; margin: 0; padding: 0; font-size: 16pt; line-height: 1.3; }
+  .schritte li { display: flex; gap: 4mm; align-items: baseline; margin-bottom: 6mm; }
+  .schritte b {
+    font-family: var(--serif); font-size: 24pt; color: #fff; background: var(--accent);
+    width: 11mm; height: 11mm; border-radius: 50%; flex: none;
+    display: inline-flex; align-items: center; justify-content: center; line-height: 1;
+  }
+  .scan { font-weight: 700; font-size: 18pt; margin: 0 0 6mm; }
+
+  .adresse { margin-top: 10mm; font-size: 13pt; color: var(--muted); }
+  .adresse span { display: block; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 14pt; color: var(--text); word-break: break-all; margin-top: 1mm; }
+
+  .fuss {
+    margin-top: auto; padding-top: 6mm; border-top: .5mm solid #D9C9B5;
+    display: flex; justify-content: space-between; gap: 8mm; font-size: 12pt; color: var(--muted);
+  }
+  .fuss strong { color: var(--text); }
+  .visdp { margin: 3mm 0 0; font-size: 9pt; color: var(--muted); }
+  mark.platzhalter { background: #FFE58A; color: #5A4300; padding: 0 1mm; }
+
+  @media print {
+    body { background: none; }
+    .werkzeug { display: none; }
+    .blatt { margin: 0; box-shadow: none; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="werkzeug">
+  <p>Das ist euer Aushang für Kaffee&amp;Kelle. Am besten in Farbe auf A4 drucken. Beim Drucken „Hintergrundgrafiken“ einschalten und den Rand auf „Keiner“ stellen.</p>
+  <button type="button" onclick="window.print()">Drucken</button>
+  <button type="button" class="zweit" id="qr-laden">Nur QR-Code speichern</button>
+  <div class="warnung" id="warnung"></div>
+  <div class="warnung" id="warnung-visdp">Achtung: Unten bei „V.i.S.d.P.“ stehen noch Platzhalter. Bitte in config.js bei „verantwortlich“ und „anbieter“ ausfüllen.</div>
+</div>
+
+<div class="blatt">
+  <div class="band"></div>
+  <div class="oben">
+    <img class="logo" src="bilder/logo.png" alt="Kaffee&amp;Kelle – Solidartisch in Marburg">
+    <div>
+      <p class="kicker">Offener Brief an die Stadt</p>
+      <h1><span data-titel>Kaffee&amp;Kelle</span> soll weitergehen.</h1>
+    </div>
+  </div>
+  <p class="lead">Zwölf Wochen Suppe, Kaffee und gute Begegnungen mitten in Marburg. Viele von uns haben das möglich gemacht. In einem offenen Brief danken wir der Stadt und bitten sie, uns beim Weitermachen zu unterstützen. <strong>Unterschreib mit!</strong></p>
+
+  <div class="mitte">
+    <div class="qr" id="qr" role="img" aria-label="QR-Code zur Seite mit dem offenen Brief"></div>
+    <div>
+      <p class="scan">Mit dem Handy scannen:</p>
+      <ol class="schritte">
+        <li><b>1</b><span>Brief lesen</span></li>
+        <li><b>2</b><span>Name und PLZ eintragen, E-Mail abschicken</span></li>
+        <li><b>3</b><span>Weitersagen!</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <p class="adresse">Ohne Handy? Die Seite gibt’s auch am Computer:<span id="url"></span></p>
+
+  <div class="fuss">
+    <span><strong>Dauert eine Minute.</strong> Wir veröffentlichen die Liste nicht.</span>
+    <span>Danke, dass du dabei bist!</span>
+  </div>
+  <p class="visdp">V.i.S.d.P.: <span id="visdp"></span></p>
+</div>
+
+<script>
+(function () {
+  var K = window.KONFIG || {};
+  var MT = K.name || "Mittagstisch";
+  document.title = "Aushang – " + MT;
+  document.getElementById("visdp").innerHTML = window.GEMEINSAM.verantwortlichZeile();
+  if (document.querySelector("#visdp mark")) document.getElementById("warnung-visdp").classList.add("an");
+
+  var url = (K.seitenAdresse || "").trim();
+  if (!url) {
+    url = location.href.split("#")[0].split("?")[0].replace(/aushang\.html$/, "");
+  }
+  var anzeige = url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  document.getElementById("url").textContent = anzeige;
+
+  var warn = document.getElementById("warnung");
+  if (!/^https?:\/\//.test(url) || /localhost|127\.0\.0\.1/.test(url)) {
+    warn.textContent = "Achtung: Der QR-Code zeigt gerade auf eine Datei auf diesem Computer (" + url +
+      "). Erst die Seite online stellen und den Aushang dann von dort öffnen, oder die Adresse in config.js bei „seitenAdresse“ eintragen.";
+    warn.classList.add("an");
+  }
+
+  var qr = qrcode(0, "M");
+  qr.addData(url);
+  qr.make();
+  var svg = qr.createSvgTag({ cellSize: 10, margin: 0, scalable: true });
+  document.getElementById("qr").innerHTML = svg;
+
+  document.getElementById("qr-laden").addEventListener("click", function () {
+    var gross = qr.createSvgTag({ cellSize: 20, margin: 80 });
+    var blob = new Blob([gross], { type: "image/svg+xml" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "qr-code-" + MT.toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".svg";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+})();
+</script>
+</body>
+</html>

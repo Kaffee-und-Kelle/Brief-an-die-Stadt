@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impressum – Kaffee&amp;Kelle</title>
+<link rel="icon" type="image/png" href="bilder/favicon.png">
+<link rel="stylesheet" href="seite.css">
+<script src="config.js"></script>
+<script src="brief.js"></script>
+<script src="gemeinsam.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <a class="zurueck" href="./">← Zurück zum offenen Brief</a>
+  <h1>Impressum</h1>
+  <p class="warnung" id="warnung" hidden>Hier stehen noch Platzhalter (gelb markiert). Bitte in <code>config.js</code> ausfüllen.</p>
+
+  <div class="karte">
+    <p class="klein">Angaben gemäß § 5 DDG und § 18 Abs. 1 MStV</p>
+    <p class="adresse" id="anbieter"></p>
+    <p id="register"></p>
+
+    <h2>Kontakt</h2>
+    <p id="kontakt"></p>
+
+    <h2>Verantwortlich für den Inhalt</h2>
+    <p class="klein" style="margin-bottom:4px">nach § 18 Abs. 2 MStV</p>
+    <p id="verantwortlich"></p>
+
+    <h2>Hinweis</h2>
+    <p>Diese Seite sammelt Unterschriften für den offenen Brief von Team, Gästen und Unterstützern von <span data-name></span>. Getragen wird die Aktion von <span id="traeger"></span>. Die Seite ist <strong>kein Angebot der Stadt</strong>.</p>
+  </div>
+
+  <footer><a href="./">Offener Brief</a> · <a href="datenschutz.html">Datenschutz</a></footer>
+</div>
+
+<script>
+(function () {
+  var K = window.KONFIG || {}, G = window.GEMEINSAM, a = K.anbieter || {};
+  document.getElementById("anbieter").innerHTML = G.anbieterBlock();
+  var reg = G.registerZeile();
+  if (reg) document.getElementById("register").innerHTML = reg; else document.getElementById("register").remove();
+  document.getElementById("traeger").innerHTML = G.feld(a.name || "");
+  var kontakt = "E-Mail: " + G.mail(a.email);
+  if (a.telefon) kontakt += "<br>Telefon: " + G.feld(a.telefon);
+  document.getElementById("kontakt").innerHTML = kontakt;
+  document.getElementById("verantwortlich").innerHTML = G.verantwortlichZeile();
+  if (document.querySelector("mark.platzhalter")) document.getElementById("warnung").hidden = false;
+})();
+</script>
+</body>
+</html>

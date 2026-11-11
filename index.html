@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kaffee&amp;Kelle soll weitergehen – unterschreib mit!</title>
+<meta name="description" content="Zwölf Wochen Suppe und Begegnung mitten in Marburg. Stell dich mit deinem Namen hinter unseren offenen Brief an die Stadt: Kaffee&Kelle soll weitergehen.">
+<meta name="theme-color" content="#FBF6EE">
+<!-- Vorschau beim Teilen (WhatsApp, Signal, Facebook …). Nach dem Hochladen die volle Adresse eintragen, siehe README. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kaffee&amp;Kelle soll weitergehen">
+<meta property="og:description" content="Stell dich mit deinem Namen hinter unseren offenen Brief an die Stadt Marburg. Dauert eine Minute.">
+<meta property="og:image" content="bilder/teilen.png">
+<link rel="icon" type="image/png" href="bilder/favicon.png">
+<link rel="apple-touch-icon" href="bilder/apple-touch-icon.png">
+<script src="config.js"></script>
+<script src="brief.js"></script>
+<script src="gemeinsam.js"></script>
+<style>
+  :root {
+    --bg: #FBF6EE;
+    --card: #FFFFFF;
+    --text: #1F1914;
+    --muted: #665A4E;
+    --accent: #B5532E;
+    --accent-dark: #8E3E20;
+    --soft: #F4E9DA;
+    --line: #E4D5C2;
+    --ok: #2F6B3F;
+    --radius: 16px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 12px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.55 var(--sans);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px 96px; }
+  a { color: var(--accent-dark); }
+
+  .konfig-warnung { background: #FFF1D6; color: #7A4B00; font-size: 14px; padding: 10px 16px; text-align: center; }
+  mark.platzhalter { background: #FFE58A; color: #5A4300; padding: 0 3px; border-radius: 3px; }
+
+  /* ---------- Kopf ---------- */
+  header { padding: 22px 0 4px; text-align: center; }
+  .logo { display: block; width: min(210px, 54vw); height: auto; margin: 0 auto 2px; }
+  h1 {
+    font-family: var(--serif); font-weight: 700;
+    font-size: clamp(31px, 8.4vw, 46px); line-height: 1.1; letter-spacing: -.01em;
+    margin: 10px 0 12px;
+  }
+  .lead { font-size: 18px; margin: 0 auto 18px; max-width: 34em; }
+
+  .ziel {
+    background: var(--card); border: 2px solid var(--accent); border-radius: var(--radius);
+    padding: 16px 16px 18px; margin: 0 0 6px; text-align: left;
+  }
+  .ziel .label {
+    font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--accent-dark);
+    margin: 0 0 4px;
+  }
+  .ziel p { margin: 0 0 14px; font-size: 17px; }
+  .zaehler { display: flex; align-items: baseline; gap: 8px; margin: 0 0 14px; }
+  .zaehler b { font-family: var(--serif); font-size: 34px; color: var(--accent-dark); line-height: 1; }
+  .zaehler span { font-size: 15px; color: var(--muted); }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; min-height: 56px; padding: 14px 18px;
+    font: 700 19px/1.2 var(--sans); color: #fff; text-decoration: none; text-align: center;
+    background: var(--accent); border: 0; border-radius: 14px; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:hover { background: var(--accent-dark); }
+  .btn:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+  .btn[aria-disabled=true] { background: #CDBFAF; cursor: not-allowed; }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+  .btn-leise {
+    display: flex; align-items: center; justify-content: center; min-height: 50px; margin-top: 10px;
+    font: 600 16px/1.2 var(--sans); color: var(--accent-dark); text-decoration: none;
+    border: 2px solid var(--line); border-radius: 12px; background: #FFFDF9;
+  }
+  .btn2 {
+    display: flex; align-items: center; justify-content: center; min-height: 50px; padding: 10px 12px;
+    font: 600 16px/1.2 var(--sans); color: var(--text); text-decoration: none; text-align: center;
+    background: #FFFDF9; border: 2px solid var(--line); border-radius: 12px; cursor: pointer;
+  }
+  .btn2:hover { border-color: var(--accent); }
+  .btn2.ok { border-color: var(--ok); color: var(--ok); }
+  .btn2[aria-disabled=true] { opacity: .5; cursor: not-allowed; }
+
+  /* ---------- Karten ---------- */
+  section.card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 20px 16px; margin-top: 18px;
+  }
+  h2 { font-family: var(--serif); font-size: 25px; line-height: 1.2; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 16px; font-size: 16px; }
+
+  /* Brief in Kürze */
+  .kurz { list-style: none; counter-reset: k; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .kurz li {
+    counter-increment: k; display: grid; grid-template-columns: 30px 1fr; gap: 10px;
+    font-size: 16.5px; line-height: 1.45;
+  }
+  .kurz li::before {
+    content: counter(k); width: 30px; height: 30px; border-radius: 50%;
+    background: var(--soft); color: var(--accent-dark); font: 700 16px/30px var(--serif); text-align: center;
+  }
+  .kurz strong { color: var(--text); }
+
+  details.brief { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 4px; }
+  details.brief > summary {
+    list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    min-height: 52px; font-weight: 700; color: var(--accent-dark); font-size: 17px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  details.brief > summary::-webkit-details-marker { display: none; }
+  details.brief > summary::after {
+    content: ""; width: 10px; height: 10px; border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor;
+    transform: rotate(45deg); margin-right: 6px; transition: transform .2s;
+  }
+  details.brief[open] > summary::after { transform: rotate(-135deg); }
+  .papier {
+    background: #FFFDF9; border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 16px; margin: 6px -4px 12px;
+    font-family: var(--serif); font-size: 17.5px; line-height: 1.6; color: #2A221B;
+    hyphens: auto; -webkit-hyphens: auto;
+  }
+  .papier h3 { font-family: var(--serif); font-size: 20px; line-height: 1.3; margin: 0 0 16px; }
+  .papier p { margin: 0 0 14px; }
+  .papier .brief-absender { margin-top: 18px; font-style: italic; }
+  .pdf-link { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; min-height: 44px; }
+  .pdf-link svg { width: 18px; height: 18px; }
+
+  /* Formular */
+  .field { margin-bottom: 22px; }
+  .q { display: block; font-weight: 650; margin-bottom: 8px; font-size: 17px; }
+  .opt { font-weight: 400; color: var(--muted); font-size: 15px; }
+  .req { color: var(--accent); }
+  .hint { color: var(--muted); font-size: 14.5px; margin: 6px 0 0; }
+  fieldset { border: 0; padding: 0; margin: 0 0 22px; min-width: 0; }
+  legend { padding: 0; }
+
+  input[type=text], textarea {
+    width: 100%; font: inherit; font-size: 17px; color: inherit;
+    background: #FFFDF9; border: 2px solid var(--line); border-radius: 12px;
+    padding: 12px 14px; min-height: 52px; -webkit-appearance: none; appearance: none;
+  }
+  input#plz { max-width: 160px; letter-spacing: .08em; }
+  textarea { min-height: 140px; resize: vertical; line-height: 1.5; }
+  input:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(181,83,46,.18); }
+
+  /* Auswahl als große Kacheln – gut mit dem Daumen */
+  .wahl { display: grid; gap: 8px; }
+  .wahl.zwei { grid-template-columns: 1fr 1fr; }
+  .opt-kachel { position: relative; display: block; }
+  .opt-kachel input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .opt-kachel span {
+    display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px;
+    border: 2px solid var(--line); border-radius: 12px; background: #FFFDF9;
+    font-size: 16.5px; line-height: 1.3; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
+  }
+  .opt-kachel span::before {
+    content: ""; flex: none; width: 22px; height: 22px; border: 2px solid #BFAE99; border-radius: 6px; background: #fff;
+  }
+  .opt-kachel input[type=radio] + span::before { border-radius: 50%; }
+  .opt-kachel input:checked + span { border-color: var(--accent); background: #FFF5EE; font-weight: 600; }
+  .opt-kachel input:checked + span::before {
+    border-color: var(--accent); background: var(--accent)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;
+  }
+  .opt-kachel input[type=radio]:checked + span::before {
+    background: radial-gradient(circle, #fff 0 4px, var(--accent) 5px);
+  }
+  .opt-kachel input:focus-visible + span { box-shadow: 0 0 0 3px rgba(181,83,46,.35); }
+
+  .unterfeld {
+    margin: 10px 0 0; padding: 14px; border-radius: 12px; background: var(--soft);
+  }
+  .unterfeld .q { font-size: 16px; }
+  .unterfeld input[type=text] { margin-top: 8px; }
+
+  .trenner { border: 0; border-top: 1px dashed var(--line); margin: 26px 0 18px; }
+  .extra-kopf { font-family: var(--serif); font-size: 21px; font-weight: 700; margin: 0 0 12px; }
+  .extra-kopf .opt { font-family: var(--sans); font-size: 15px; font-weight: 400; }
+  .gaestebuch-feld .q { font-size: 16px; }
+  .gaestebuch-feld { margin-top: 2px; padding: 14px; border-radius: 12px; background: var(--soft); }
+  .gaestebuch-feld textarea { background: #fff; }
+  .danke-weiter { display: block; margin-top: 10px; font-weight: 600; }
+  .teilen-knopf { display: inline-flex; margin-top: 10px; padding: 8px 20px; min-height: 46px; }
+
+  .gaestebuch-kopf { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+  .gaestebuch-kopf svg { width: 30px; height: 30px; flex: none; color: var(--accent); margin-top: 2px; }
+  .gaestebuch-kopf h3 { font-family: var(--serif); font-size: 21px; margin: 0; line-height: 1.25; }
+  .gaestebuch-kopf p { margin: 4px 0 0; color: var(--muted); font-size: 15.5px; }
+  .ideen { margin: 8px 0 0; font-size: 14.5px; color: var(--muted); }
+  .zeichen { text-align: right; font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* Häkchen */
+  .haken { display: grid; gap: 10px; }
+  .haken > label {
+    display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start;
+    padding: 14px; border: 2px solid var(--line); border-radius: 12px; background: #FFFDF9;
+    cursor: pointer; font-size: 16px; line-height: 1.45; -webkit-tap-highlight-color: transparent;
+  }
+  .haken > label:has(input:checked) { border-color: var(--accent); background: #FFF8F2; }
+  .haken input { width: 24px; height: 24px; margin: 1px 0 0; accent-color: var(--accent); cursor: pointer; }
+  .haken .pflicht { font-weight: 650; }
+  .haken details { margin-top: 6px; font-size: 14px; color: var(--muted); }
+  .haken details summary { cursor: pointer; color: var(--accent-dark); min-height: 32px; display: inline-flex; align-items: center; }
+  .haken .klein { display: block; color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+  /* Versand */
+  .wichtig {
+    display: grid; grid-template-columns: 26px 1fr; gap: 10px;
+    background: #FFF1D6; color: #5E3B00; border-radius: 12px; padding: 12px 14px; margin: 0 0 16px; font-size: 15.5px;
+  }
+  .wichtig svg { width: 24px; height: 24px; }
+  .meta { font-size: 15px; margin: 0 0 10px; display: grid; gap: 4px; }
+  .meta div { display: grid; grid-template-columns: 70px 1fr; gap: 6px; }
+  .meta dt { color: var(--muted); }
+  .meta dd { margin: 0; font-weight: 600; word-break: break-word; }
+  details.vorschau-box > summary { cursor: pointer; color: var(--accent-dark); font-weight: 600; font-size: 15.5px; min-height: 44px; display: flex; align-items: center; }
+  .vorschau {
+    white-space: pre-wrap; font: 14.5px/1.5 var(--sans); background: #FFFDF9;
+    border: 2px dashed var(--line); border-radius: 10px; padding: 12px 14px; margin: 4px 0 0;
+    max-height: 380px; overflow: auto; word-break: break-word;
+  }
+  .vorschau .platz { color: var(--muted); font-style: italic; }
+  .fehlt { color: var(--accent-dark); font-size: 15.5px; margin: 10px 0 0; text-align: center; min-height: 1.4em; }
+
+  .danke {
+    display: none; margin-top: 14px; padding: 14px 16px; border-radius: 12px;
+    background: #E8F2EA; color: var(--ok); font-size: 16.5px;
+  }
+  .danke.an { display: block; }
+
+  .alt { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--line); }
+  .alt h3 { font-size: 17px; margin: 0 0 4px; }
+  .alt p { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .grid3 { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 10px; }
+  .hinweis-klein { font-size: 13.5px !important; color: var(--muted); margin: 8px 0 0 !important; }
+  .lang { margin-top: 10px; font-size: 14.5px; color: var(--muted); }
+
+  .weiter ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 16px; }
+  .weiter li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; }
+  .weiter li::before { content: "✓"; color: var(--ok); font-weight: 700; }
+
+  .teilen { text-align: center; }
+  .teilen p { color: var(--muted); margin: 0 0 14px; }
+  .teilen .btn2 { display: inline-flex; padding: 10px 24px; }
+
+  footer { margin-top: 32px; font-size: 14.5px; color: var(--muted); text-align: center; }
+  footer p { margin: 6px 0; }
+  footer a { color: var(--muted); }
+  .schloss { display: inline-flex; gap: 8px; align-items: flex-start; text-align: left; max-width: 520px; }
+  .schloss svg { width: 18px; height: 18px; flex: none; margin-top: 3px; }
+
+  /* Schwebender Knopf am Handy */
+  .schwebe {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(251,246,238,.94); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--line);
+    transform: translateY(110%); transition: transform .25s;
+  }
+  .schwebe.an { transform: none; }
+  .schwebe .btn { max-width: 608px; margin: 0 auto; min-height: 52px; font-size: 18px; }
+
+  @media (min-width: 560px) {
+    .wrap { padding: 0 24px 96px; }
+    section.card { padding: 26px 24px; }
+    .ziel { padding: 20px 22px 22px; }
+    .grid3 { grid-template-columns: repeat(3, 1fr); }
+    .papier { padding: 30px 32px; margin: 6px 0 12px; }
+    header { padding-top: 34px; }
+  }
+  @media (min-width: 900px) { .schwebe { display: none; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .schwebe { transition: none; } }
+</style>
+</head>
+<body>
+<div class="konfig-warnung" id="konfig-warnung" hidden></div>
+<div class="wrap">
+
+  <header>
+    <img class="logo" src="bilder/logo.png" width="640" height="515" alt="Kaffee&amp;Kelle – Solidartisch in Marburg">
+    <h1><span data-titel>Kaffee&amp;Kelle</span> soll weitergehen.</h1>
+    <p class="lead">Zwölf Wochen Suppe, Kaffee und gute Begegnungen mitten in Marburg, getragen von vielen von uns. In einem offenen Brief danken wir der Stadt und bitten sie, uns beim Weitermachen zu unterstützen.</p>
+
+    <div class="ziel" id="ziel">
+      <p class="label">Darum geht’s</p>
+      <p><strong>Stell dich mit deinem Namen hinter unseren Brief.</strong> <span data-uebergabe></span> übergeben wir ihn gemeinsam an <span data-empfaenger></span>, mit allen Unterschriften. Je mehr wir sind, desto deutlicher sieht die Stadt, wie viele Menschen Kaffee&amp;Kelle tragen.</p>
+      <div class="zaehler" id="zaehler" hidden><b id="zaehler-zahl"></b><span id="zaehler-text"></span></div>
+      <a class="btn" href="#formular-start" id="cta-oben">Ich unterschreibe mit</a>
+      <a class="btn-leise" href="#brief">Erst den Brief lesen</a>
+    </div>
+  </header>
+
+  <noscript>
+    <section class="card"><p>Diese Seite braucht JavaScript. Du kannst uns aber auch einfach eine E-Mail an leitung(at)solidarburg.de schreiben: dein Name, deine PLZ, was dich mit Kaffee&amp;Kelle verbindet und der Satz, dass du den offenen Brief unterschreibst und mit der Weitergabe an die Stadt einverstanden bist.</p></section>
+  </noscript>
+
+  <!-- DER BRIEF -->
+  <section class="card" id="brief" aria-labelledby="h-brief">
+    <h2 id="h-brief">Unser Brief in fünf Punkten</h2>
+    <p class="sub" data-brieftitel></p>
+    <ol class="kurz" id="kurz"></ol>
+
+    <details class="brief" id="brief-details">
+      <summary>Den ganzen Brief lesen <span class="opt" style="font-weight:400">(2 Minuten)</span></summary>
+      <div class="papier" id="brieftext"></div>
+      <a class="pdf-link" data-briefpdf href="offener-brief.pdf" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
+        Brief als PDF herunterladen
+      </a>
+    </details>
+  </section>
+
+  <!-- UNTERSCHRIFT -->
+  <section class="card" id="formular-start" aria-labelledby="h-form">
+    <h2 id="h-form">Ich bin dabei</h2>
+
+    <form id="formular" autocomplete="on" onsubmit="return false">
+      <div class="field">
+        <label class="q" for="name">Dein Name <span class="req" aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" autocomplete="name" autocapitalize="words" enterkeyhint="next" placeholder="Vor- und Nachname" required>
+      </div>
+
+      <div class="field">
+        <label class="q" for="plz">Deine Postleitzahl <span class="req" aria-hidden="true">*</span></label>
+        <input type="text" id="plz" name="plz" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]*" maxlength="5" enterkeyhint="done" placeholder="35037" required>
+      </div>
+
+      <fieldset>
+        <legend class="q">Was verbindet dich mit Kaffee&amp;Kelle?&nbsp;<span class="req" aria-hidden="true">*</span></legend>
+        <div class="wahl" id="verbindung">
+          <label class="opt-kachel"><input type="checkbox" data-text="war zu Gast"><span>Ich war zu Gast</span></label>
+          <label class="opt-kachel"><input type="checkbox" data-text="habe ehrenamtlich mitgeholfen" data-helfer><span>Ich habe ehrenamtlich mit angepackt</span></label>
+          <label class="opt-kachel"><input type="checkbox" data-text="gehöre zum hauptamtlichen Team" data-helfer><span>Ich bin im hauptamtlichen Team</span></label>
+          <label class="opt-kachel"><input type="checkbox" data-text="finde das Projekt wichtig"><span>Mir ist es einfach wichtig</span></label>
+        </div>
+
+        <div class="unterfeld" id="initiative-feld" hidden>
+          <label class="q" for="initiative" style="margin:0">Mit welchem Verein oder welcher Initiative bist du dabei? <span class="opt">(freiwillig)</span></label>
+          <input type="text" id="initiative" name="initiative" autocapitalize="words" placeholder="Name eures Vereins oder eurer Initiative">
+          <p class="hint">Leer lassen, wenn du privat dabei bist.</p>
+        </div>
+      </fieldset>
+
+      <div class="field haken">
+        <label>
+          <input type="checkbox" id="ok-einwilligung">
+          <span><span class="pflicht">Ich unterschreibe den offenen Brief und bin einverstanden, dass mein Name an die Stadt&nbsp;geht.&nbsp;<span class="req" aria-hidden="true">*</span></span>
+            <details><summary>Einwilligung im Wortlaut</summary><span id="einwilligung-text"></span> Mehr im <a href="datenschutz.html">Datenschutzhinweis</a>.</details></span>
+        </label>
+        <label>
+          <input type="checkbox" id="ok-alter">
+          <span class="pflicht">Ich bin mindestens <span data-mindestalter>16</span> Jahre&nbsp;alt.&nbsp;<span class="req" aria-hidden="true">*</span></span>
+        </label>
+      </div>
+
+      <hr class="trenner">
+      <p class="extra-kopf">Du willst noch mehr tun? <span class="opt">(freiwillig)</span></p>
+
+      <!-- Gästebuch -->
+      <div class="field haken">
+        <label>
+          <input type="checkbox" id="ok-gaestebuch">
+          <span class="pflicht">Ich möchte den Brief noch persönlich mit einem Gästebuch-Eintrag unterstützen</span>
+        </label>
+        <div class="gaestebuch-feld" id="gaestebuch-feld" hidden>
+          <label class="q" for="gaestebuch">Mein Eintrag ins Gästebuch</label>
+          <textarea id="gaestebuch" maxlength="1000" placeholder="Was war dein schönster Moment? Wen hast du dort kennengelernt? Was würde Marburg ohne Kaffee&Kelle fehlen?"></textarea>
+          <div class="zeichen"><span id="zeichen">0</span> / 1000</div>
+          <p class="hint">Dein Eintrag geht mit deinem Namen an die Stadt. Wir veröffentlichen ihn nicht. Bitte nenn keine anderen Personen beim Namen.</p>
+        </div>
+      </div>
+
+      <div class="field haken">
+        <label>
+          <input type="checkbox" id="ok-info">
+          <span><span class="pflicht">Haltet mich auf dem Laufenden</span>
+            <span class="klein" id="info-einwilligung-text"></span></span>
+        </label>
+      </div>
+    </form>
+  </section>
+
+  <!-- VERSAND -->
+  <section class="card" id="versand" aria-labelledby="h-mail">
+    <h2 id="h-mail">Letzter Schritt: abschicken</h2>
+    <p class="sub">Deine Unterschrift kommt per E-Mail bei uns an, nicht direkt bei der Stadt. Wir sammeln alle und übergeben sie gemeinsam.</p>
+
+    <div class="wichtig" role="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg>
+      <span><strong>Bitte nichts an der E-Mail ändern</strong>, einfach nur auf Senden tippen.</span>
+    </div>
+
+    <dl class="meta">
+      <div><dt>An:</dt><dd id="v-an"></dd></div>
+      <div><dt>Betreff:</dt><dd id="v-betreff"></dd></div>
+    </dl>
+    <details class="vorschau-box">
+      <summary>E-Mail vorab ansehen</summary>
+      <pre class="vorschau" id="vorschau" aria-label="Text der E-Mail"></pre>
+    </details>
+
+    <div style="margin-top:16px">
+      <a class="btn" id="senden" href="#" aria-disabled="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Jetzt unterschreiben
+      </a>
+      <p class="fehlt" id="fehlt" aria-live="polite"></p>
+    </div>
+
+    <div class="danke" id="danke" role="status">
+      <strong>Fast geschafft!</strong> In deinem E-Mail-Programm ist alles vorbereitet. Bitte <strong>nichts ändern</strong> und nur noch auf <strong>Senden</strong> tippen. Danke, dass du dabei bist!
+      <span class="danke-weiter">Und jetzt: Sag’s weiter! Jede Unterschrift mehr macht unseren Brief stärker.</span>
+      <button type="button" class="btn2 teilen-knopf" data-teilen>Seite teilen</button>
+      <span style="display:block;font-size:14px;margin-top:10px">Hat sich nichts geöffnet? Dann kopier die E-Mail einfach, siehe unten.</span>
+    </div>
+
+    <div class="alt">
+      <p>Kein E-Mail-Programm aufgegangen? Dann kopier die drei Teile in eine neue E-Mail:</p>
+      <div class="grid3">
+        <button type="button" class="btn2" data-kopie="an">1. Adresse kopieren</button>
+        <button type="button" class="btn2" data-kopie="betreff">2. Betreff kopieren</button>
+        <button type="button" class="btn2" data-kopie="text">3. Text kopieren</button>
+      </div>
+      <p class="lang" id="lang" hidden>Deine E-Mail ist recht lang. Falls dein E-Mail-Programm sie abschneidet, nimm bitte „Text kopieren“.</p>
+    </div>
+  </section>
+
+  <section class="card weiter" aria-labelledby="h-weiter">
+    <h2 id="h-weiter">Was passiert mit deinen Angaben?</h2>
+    <ul>
+      <li><span>Die Stadt (<span data-empfaenger></span>) bekommt <span data-uebergabe></span> den Brief und eine Liste mit Name, PLZ, deiner Verbindung zu Kaffee&amp;Kelle und ggf. Verein und Gästebuch-Eintrag. Wir veröffentlichen die Liste nicht.</span></li>
+      <li><span>Deine E-Mail-Adresse bekommt die Stadt nicht.</span></li>
+      <li><span>Spätestens <span data-loeschfrist></span> nach der Übergabe löschen wir die Unterschriften-E-Mails und Listen.</span></li>
+      <li><span>Nur wenn du „Haltet mich auf dem Laufenden“ ankreuzt, behalten wir Name und E-Mail-Adresse, bis du dich abmeldest, längstens bis <span data-infobis></span>.</span></li>
+      <li><span>Du hast es dir anders überlegt? Eine kurze E-Mail an <span data-sammeladresse></span> genügt.</span></li>
+    </ul>
+  </section>
+
+  <section class="card teilen">
+    <h2>Sag’s weiter</h2>
+    <p>Jede Unterschrift macht unseren Brief stärker. Schick die Seite an alle, die Kaffee&amp;Kelle kennen oder kennen sollten.</p>
+    <button type="button" class="btn2" id="teilen" data-teilen>Seite teilen</button>
+  </section>
+
+  <footer>
+    <p class="schloss">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      <span>Diese Seite selbst speichert nichts und setzt keine Cookies. Deine Angaben erreichen uns erst, wenn du die E-Mail abschickst.</span>
+    </p>
+    <p class="rechtliches"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+  </footer>
+</div>
+
+<div class="schwebe" id="schwebe" aria-hidden="true">
+  <a class="btn" href="#formular-start" tabindex="-1">Ich unterschreibe mit</a>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var K = window.KONFIG || {};
+  var B = window.BRIEF || {};
+  var G = window.GEMEINSAM;
+  var F = G.FELDER;
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---------- Inhalte einsetzen ----------
+  $("v-an").innerHTML = G.feld(K.sammelAdresse || "");
+  $("einwilligung-text").innerHTML = G.feld(G.einwilligung());
+  $("info-einwilligung-text").innerHTML = G.feld(G.infoEinwilligung());
+  $("kurz").innerHTML = (B.kurz || []).map(function (p) { return "<li><span>" + p + "</span></li>"; }).join("");
+  $("brieftext").innerHTML = "<h3>" + G.esc(G.briefTitel()) + "</h3>" + G.briefHtml();
+
+  var z = K.zaehler || {};
+  if (z.anzahl > 0) {
+    $("zaehler-zahl").textContent = Number(z.anzahl).toLocaleString("de-DE");
+    $("zaehler-text").textContent = "sind schon dabei" + (z.stand ? " (Stand " + z.stand + ")" : "") + ". Du auch?";
+    $("zaehler").hidden = false;
+  }
+
+  var offen = G.konfigPlatzhalter();
+  if (offen.length) {
+    $("konfig-warnung").innerHTML = "Vor dem Start: In <code>config.js</code> stehen noch Platzhalter (" +
+      G.esc(offen.join(", ")) + ").";
+    $("konfig-warnung").hidden = false;
+  }
+
+  // ---------- Angaben lesen ----------
+  function wert(id) { return $(id).value.trim().replace(/\s+/g, " "); }
+  function plzOk() { return /^\d{5}$/.test(wert("plz")); }
+
+  function verbindung() {
+    return Array.prototype.map.call(document.querySelectorAll("#verbindung input:checked"),
+      function (i) { return i.getAttribute("data-text"); });
+  }
+  function istHelfer() { return !!document.querySelector("#verbindung input[data-helfer]:checked"); }
+
+  function initiative() { return istHelfer() ? wert("initiative") : ""; }
+
+  function gaestebuch() {
+    if (!$("ok-gaestebuch").checked) return "";
+    // Absätze behalten, aber überflüssige Leerzeilen entfernen
+    return $("gaestebuch").value.replace(/\r/g, "").split("\n").map(function (l) { return l.trim(); })
+      .join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  }
+
+  function betreff() {
+    return (K.betreff || "Ich unterschreibe den offenen Brief von {titel} – {name}")
+      .replace("{titel}", G.titel()).replace("{name}", wert("name") || "…");
+  }
+
+  // ---------- E-Mail erzeugen ----------
+  function erzeugeText() {
+    var name = wert("name"), v = verbindung(), gb = gaestebuch();
+    var z = [
+      "Hallo,",
+      "",
+      "hiermit unterzeichne ich den offenen Brief „" + G.briefTitel() + "“ an " + (K.empfaenger || "die Stadt") + ".",
+      "",
+      F.name + ": " + (name || "…"),
+      F.plz + ": " + (wert("plz") || "…"),
+      F.verbindung + ": " + (v.length ? v.join("; ") : "…"),
+      F.initiative + ": " + (initiative() || "–"),
+      F.info + ": " + ($("ok-info").checked ? "ja – " + G.infoEinwilligung() : "nein"),
+      "",
+      F.einwilligung + ": " + ($("ok-einwilligung").checked ? G.einwilligung() : "…"),
+      F.alter + ": " + ($("ok-alter").checked ? G.altersSatz() : "…")
+    ];
+    if (gb) z.push("", G.GAESTEBUCH_ANFANG, gb, G.GAESTEBUCH_ENDE);
+    z.push("", "Viele Grüße", name || "…");
+    return z.join("\n");
+  }
+
+  function fehlend() {
+    var f = [];
+    if (!wert("name")) f.push("deinen Namen");
+    if (!plzOk()) f.push("deine PLZ (5 Ziffern)");
+    if (!verbindung().length) f.push("was dich mit Kaffee&Kelle verbindet");
+    if (!$("ok-einwilligung").checked) f.push("das Häkchen zur Unterschrift");
+    if (!$("ok-alter").checked) f.push("das Häkchen zum Alter");
+    return f;
+  }
+  function erstesFehlendes() {
+    if (!wert("name")) return $("name");
+    if (!plzOk()) return $("plz");
+    if (!verbindung().length) return $("verbindung");
+    if (!$("ok-einwilligung").checked) return $("ok-einwilligung");
+    return $("ok-alter");
+  }
+
+  function enc(s) { return encodeURIComponent(s); }
+  function crlf(s) { return s.replace(/\r?\n/g, "\r\n"); }
+  var text = "";
+
+  function aktualisiere() {
+    $("initiative-feld").hidden = !istHelfer();
+    $("gaestebuch-feld").hidden = !$("ok-gaestebuch").checked;
+    $("zeichen").textContent = $("gaestebuch").value.length;
+
+    text = erzeugeText();
+    $("vorschau").innerHTML = G.esc(text).replace(/…/g, '<span class="platz">…</span>');
+    $("v-betreff").textContent = betreff();
+
+    var b = betreff(), an = (K.sammelAdresse || "").replace(/\s/g, "");
+    var mailto = "mailto:" + an + "?subject=" + enc(b) + "&body=" + enc(crlf(text));
+
+    var f = fehlend(), zu = f.length > 0;
+    $("senden").href = zu ? "#formular-start" : mailto;
+    $("senden").setAttribute("aria-disabled", zu ? "true" : "false");
+    document.querySelectorAll("[data-kopie]:not([data-kopie=an])").forEach(function (k) {
+      k.setAttribute("aria-disabled", zu ? "true" : "false");
+    });
+    $("fehlt").textContent = zu ? "Bitte noch ergänzen: " + f.join(", ") + "." : "";
+    $("lang").hidden = mailto.length < 2400;
+  }
+
+  $("formular").addEventListener("input", aktualisiere);
+  $("formular").addEventListener("change", aktualisiere);
+  $("plz").addEventListener("input", function () {
+    var v = this.value.replace(/\D/g, "").slice(0, 5);
+    if (v !== this.value) this.value = v;
+  });
+
+  function gesperrt(e) {
+    if (!fehlend().length) return false;
+    e.preventDefault();
+    var feld = erstesFehlendes();
+    feld.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (feld.focus) setTimeout(function () { feld.focus({ preventScroll: true }); }, 350);
+    return true;
+  }
+
+  $("senden").addEventListener("click", function (e) { if (!gesperrt(e)) $("danke").classList.add("an"); });
+
+  // ---------- Kopieren ----------
+  function kopiere(inhalt, knopf) {
+    function fertig() {
+      var alt = knopf.textContent;
+      knopf.textContent = "✓ Kopiert";
+      knopf.classList.add("ok");
+      setTimeout(function () { knopf.textContent = alt; knopf.classList.remove("ok"); }, 1800);
+    }
+    function ersatz() {
+      var ta = document.createElement("textarea");
+      ta.value = inhalt; ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); fertig(); } catch (e) { alert(inhalt); }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(inhalt).then(fertig, ersatz);
+    else ersatz();
+  }
+  document.querySelectorAll("[data-kopie]").forEach(function (k) {
+    k.addEventListener("click", function (e) {
+      var was = k.getAttribute("data-kopie");
+      if (was !== "an" && gesperrt(e)) return;
+      if (was === "an") kopiere(K.sammelAdresse || "", k);
+      if (was === "betreff") kopiere(betreff(), k);
+      if (was === "text") { kopiere(text, k); $("danke").classList.add("an"); }
+    });
+  });
+
+  // ---------- Teilen ----------
+  document.querySelectorAll("[data-teilen]").forEach(function (knopf) {
+    knopf.addEventListener("click", function () {
+      var url = location.href.split("#")[0];
+      var daten = { title: "Kaffee&Kelle soll weitergehen", text: "Ich hab unterschrieben, mach mit! Offener Brief für Kaffee&Kelle an die Stadt Marburg:", url: url };
+      if (navigator.share) navigator.share(daten).catch(function () {});
+      else kopiere(url, knopf);
+    });
+  });
+
+  // „Erst den Brief lesen“ klappt den Brief gleich auf
+  document.querySelector('a[href="#brief"]').addEventListener("click", function () { $("brief-details").open = true; });
+
+  // ---------- Schwebender Knopf (Handy) ----------
+  // Erscheint nur, während man Brief und Zusammenfassung liest – also wenn der Knopf oben
+  // schon weggescrollt ist und das Formular noch nicht im Bild ist.
+  var schwebe = $("schwebe"), ctaOben = $("cta-oben"), form = $("formular-start");
+  function pruefeSchwebe() {
+    var h = window.innerHeight;
+    var obenWeg = ctaOben.getBoundingClientRect().bottom < 0;
+    var formNochUnten = form.getBoundingClientRect().top > h * 0.7;
+    schwebe.classList.toggle("an", obenWeg && formNochUnten);
+  }
+  window.addEventListener("scroll", pruefeSchwebe, { passive: true });
+  window.addEventListener("resize", pruefeSchwebe);
+  $("brief-details").addEventListener("toggle", pruefeSchwebe);
+
+  aktualisiere();
+})();
+</script>
+</body>
+</html>
